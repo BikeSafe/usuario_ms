@@ -5,7 +5,15 @@ este microservicio cumple la función de:
 - CRUD de datos pesronales y de autenticación del usuario
 - CRUD de los seguidores de cada usuario
 
-para desplegarlo utilizar los siguientes comandos en docker
+## Build
+### spring tools4
+para hacer build se puede descargar la herramientas springtools4 seguir estas instrucciones:
+- http://cristianruizblog.com/spring-boot-ejecutable-exportar-aplicacion-jar/
+- https://spring.io/tools
+
+### Desplegar
+
+Utilizar los siguientes comandos en docker
 - docker run -p 8080:8080 springio/usuario_ms
 - docker build -t springio/usuario_ms .
 

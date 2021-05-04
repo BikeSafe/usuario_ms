@@ -37,16 +37,6 @@ public class UsuarioRestController {
 		return usuarioService.create(usuario);
 	}
 	
-	@PutMapping("/user/{id}/{username}")
-	public Usuario changeUsername(@PathVariable Long id, @PathVariable String username) {
-		return usuarioService.changeUsername(id, username);
-	}
-	
-	@PutMapping("/pass/{id}/{password}")
-	public Usuario changePassword(@PathVariable Long id, @PathVariable String password) {
-		return usuarioService.changePassword(id, password);
-	}
-	
 	@DeleteMapping("/usuario/{id}")
 	public Usuario changeStatus(@PathVariable Long id) {
 		return usuarioService.changeStatus(id);

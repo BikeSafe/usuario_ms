@@ -1,0 +1,501 @@
+swagger: "2.0"
+info:
+  description: "Microservicio Autenticación y datos Usuario"
+  version: "1.0.0"
+  title: "Usuario"
+  contact:
+    email: "jtorresf@toctoc.co"
+host: "usuarioback.uc.r.appspot.com"
+basePath: "/"
+tags:
+- name: "autenticación"
+  description: "Generación de token para autorización"
+- name: "usuario"
+  description: "Datos de autenticacion"
+- name: "dato"
+  description: "Datos personales"
+schemes:
+- "https"
+- "http"
+paths:
+  /oauth/token:
+    post:
+      tags:
+      - "autenticación"
+      summary: "Generar Token de autorización"
+      description: ""
+      operationId: "token"
+      consumes:
+      - "application/x-www-form-urlencoded"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Parametros de autenticación"
+        required: true
+        schema:
+          $ref: "#/definitions/BodyA"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Token"
+        "400":
+          description: "Invalid_grant"
+  /usuario/usuario:
+    get:
+      tags:
+      - "usuario"
+      summary: "Listar Usuarios"
+      description: ""
+      operationId: "fetchAgreements"
+      consumes:
+      - "none"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Usuario"
+        "405":
+          description: "Invalid input"
+    post:
+      tags:
+      - "usuario"
+      summary: "Crear nuevo usuario"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Nuevo usuario"
+        required: true
+        schema:
+          $ref: "#/definitions/Usuario"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/Usuario"
+        "400":
+          description: "Invalid_grant"
+  /usuario/usuario/{id}:
+    get:
+      tags:
+      - "usuario"
+      summary: "Busca un usuario por su id"
+      consumes:
+      - "none"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"  
+        in: "path"
+        description: "ID del usuario a buscar"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/Usuario"
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+      - "usuario"
+      summary: "Cambia el estatus de un usuario"
+      consumes:
+      - "none"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"  
+        in: "path"
+        description: "ID del usuario a cambiar status"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/Usuario"
+        "405":
+          description: "Invalid input"
+  /user/{id}/{username}:
+    put:
+      tags:
+      - "usuario"
+      summary: "Cambiar usuario"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID del usuario a cambiar el username"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "username"
+        in: "path"
+        description: "nuevo username del usuario"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Nuevo usuario"
+        required: true
+        schema:
+          $ref: "#/definitions/Usuario"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/Usuario"
+        "400":
+          description: "Invalid_grant"
+  /pass/{id}/{password}:
+    put:
+      tags:
+      - "usuario"
+      summary: "Cambiar clave"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID del usuario a cambiar la clave"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "password"
+        in: "path"
+        description: "nueva clave del usuario"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Nuevo usuario"
+        required: true
+        schema:
+          $ref: "#/definitions/Usuario"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/Usuario"
+        "400":
+          description: "Invalid_grant"
+          
+  /usuario/dato:
+    get:
+      tags:
+      - "dato"
+      summary: "Listar datos"
+      consumes:
+      - "none"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Dato"
+        "405":
+          description: "Invalid input"
+    post:
+      tags:
+      - "dato"
+      summary: "Crear nuevo dato"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Nuevo dato"
+        required: true
+        schema:
+          $ref: "#/definitions/Dato"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/Dato"
+        "400":
+          description: "Invalid_grant"
+  /usuario/dato/{id}:
+    get:
+      tags:
+      - "dato"
+      summary: "Busca un dato por su id"
+      consumes:
+      - "none"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"  
+        in: "path"
+        description: "ID del dato a buscar"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/Dato"
+        "405":
+          description: "Invalid input"
+    put:
+      tags:
+      - "dato"
+      summary: "actualizar datos de usuario"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID del usuario a cambiar la clave"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Nuevo dato"
+        required: true
+        schema:
+          $ref: "#/definitions/Dato"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/Dato"
+        "400":
+          description: "Invalid_grant"      
+  /seguidores/{id}:
+    get:
+      tags:
+      - "dato"
+      summary: "Busca los seguidores de un usuario"
+      consumes:
+      - "none"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"  
+        in: "path"
+        description: "ID del usuario"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Dato"
+        "405":
+          description: "Invalid input"
+  /seguidos/{id}:
+    get:
+      tags:
+      - "dato"
+      summary: "Busca los seguidos por el usuario"
+      consumes:
+      - "none"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"  
+        in: "path"
+        description: "ID del dato"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Dato"
+        "405":
+          description: "Invalid input"
+  /seguidor/{id}/{id2}:
+    post:
+      tags:
+      - "dato"
+      summary: "Cambiar clave"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "authorization"
+        in: "header"
+        required: true
+        type: "string"
+      - name: "id"
+        in: "path"
+        description: "ID del seguidor"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "id2"
+        in: "path"
+        description: "Id del seguido"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+              $ref: "#/definitions/Dato"
+        "400":
+          description: "Invalid_grant"
+definitions:
+  BodyA:
+    type: "object"
+    properties:
+      username: 
+        type: "string"
+      password:
+        type: "string"
+      grant_type: 
+        type: "string"
+  Dato:
+    type: "object"
+    properties:
+      dato_id:
+        type: "integer"
+        format: "int64"
+      nombre_id:
+        type: "string"
+      apellido_id:
+        type: "string"
+      cedula_id:
+        type: "integer"
+        format: "int64"
+      teledono_id:
+        type: "integer"
+        format: "int64"
+      email_id:
+        type: "string"
+      usuario:
+        type: "object"
+        properties:
+          id:
+            type: "integer"
+            format: "int64"
+          username:
+            type: "string"
+          password:
+            type: "string"
+          enabled:
+            type: "boolean"
+  Usuario:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      password:
+        type: "string"
+      enabled:
+        type: "boolean"
+  Token:
+    type: "object"
+    properties:
+      access_token:
+        type: "string"
+      token_type:
+        type: "string"
+      refresh_token:
+        type: "string"
+      expires_in:
+        type: "integer"
+        format: "int64"
+      scope:
+        type: "string"
+      jti:
+        type: "string"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

@@ -1,0 +1,9 @@
+version: '3'
+services:
+    user-server:
+        container_name: user-server
+        build: .
+        ports:
+            - 4005:4005
+        environment:
+            - PORT=4005
